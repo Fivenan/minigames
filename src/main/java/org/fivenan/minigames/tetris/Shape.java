@@ -28,19 +28,19 @@ public class Shape {
 	}
 
 	private void setShape(Tetrominoe shape) {
+		int[][] shapeCoords = coordsTable[shape.ordinal()];
+
 		for (int i = 0; i < 4; i++) {
-			for (int j = 0; j < 2; ++j) {
-				coords[i][j] = coordsTable[shape.ordinal()][i][j];
-			}
+			System.arraycopy(shapeCoords[i], 0, coords[i], 0, 2);
 		}
 	}
 
 	public void setRandomShape() {
-		Random r = new Random();
-		int x = Math.abs(r.nextInt()) % 7 + 1;
+		Random random = new Random();
+		int randomIndex = random.nextInt(Tetrominoe.values().length);
 
-		Tetrominoe[] values = Tetrominoe.values();
-		setShape(values[x]);
+		Tetrominoe randomShape = Tetrominoe.values()[randomIndex];
+		setShape(randomShape);
 	}
 
 	private void setX(int index, int x) {
