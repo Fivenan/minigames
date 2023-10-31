@@ -91,27 +91,27 @@ public class Board extends JPanel {
 	}
 
 	private void doDrawing(Graphics g) {
-
 		var size = getSize();
 		int boardTop = (int) size.getHeight() - BOARD_HEIGHT * squareHeight();
 
+		drawBoard(g, boardTop);
+		drawCurrentPiece(g, boardTop);
+	}
+
+	private void drawBoard(Graphics g, int boardTop) {
 		for (int i = 0; i < BOARD_HEIGHT; i++) {
-
 			for (int j = 0; j < BOARD_WIDTH; j++) {
-
 				Tetrominoe shape = shapeAt(j, BOARD_HEIGHT - i - 1);
-
 				if (shape != Tetrominoe.NoShape) {
-
 					drawSquare(g, j * squareWidth(), boardTop + i * squareHeight(), shape);
 				}
 			}
 		}
+	}
 
+	private void drawCurrentPiece(Graphics g, int boardTop) {
 		if (curPiece.getShape() != Tetrominoe.NoShape) {
-
 			for (int i = 0; i < 4; i++) {
-
 				int x = curX + curPiece.x(i);
 				int y = curY - curPiece.y(i);
 
@@ -119,7 +119,6 @@ public class Board extends JPanel {
 						curPiece.getShape());
 			}
 		}
-
 	}
 
 	private void dropDown() {
