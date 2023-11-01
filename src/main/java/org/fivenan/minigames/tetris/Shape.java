@@ -27,7 +27,7 @@ public class Shape {
 
 	}
 
-	private void setShape(Tetrominoe shape) {
+	void setShape(Tetrominoe shape) {
 		int[][] shapeCoords = coordsTable[shape.ordinal()];
 
 		for (int i = 0; i < 4; i++) {
