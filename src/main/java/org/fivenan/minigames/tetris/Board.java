@@ -42,7 +42,6 @@ public class Board extends JPanel {
 	}
 
 	private int squareWidth() {
-
 		return (int) getSize().getWidth() / BOARD_WIDTH;
 	}
 
@@ -51,7 +50,6 @@ public class Board extends JPanel {
 	}
 
 	private Tetrominoe shapeAt(int x, int y) {
-
 		return board[(y * BOARD_WIDTH) + x];
 	}
 
@@ -68,23 +66,17 @@ public class Board extends JPanel {
 	}
 
 	private void pause() {
-
 		isPaused = !isPaused;
-
 		if (isPaused) {
-
 			statusbar.setText("Game Paused");
 		} else {
 			statusbar.setText(String.valueOf(numLinesRemoved));
 		}
-
 		repaint();
-
 	}
 
 	@Override
 	public void paintComponent(Graphics g) {
-
 		super.paintComponent(g);
 		doDrawing(g);
 	}
@@ -121,23 +113,17 @@ public class Board extends JPanel {
 	}
 
 	private void dropDown() {
-
 		int newY = curY;
-
 		while (newY > 0) {
-
 			if (!tryMove(curPiece, curX, newY - 1)) {
-
 				break;
 			}
 			newY--;
 		}
-
 		pieceDropped();
 	}
 
 	private void oneLineDown() {
-
 		if (!tryMove(curPiece, curX, curY - 1)) {
 			pieceDropped();
 		}
@@ -145,26 +131,20 @@ public class Board extends JPanel {
 
 	private void clearBoard() {
 		for (int i = 0; i < BOARD_HEIGHT * BOARD_WIDTH; i++) {
-
 			board[i] = Tetrominoe.NO_SHAPE;
 		}
 	}
 
 	private void pieceDropped() {
-
 		for (int i = 0; i < 4; i++) {
-
 			int x = curX + curPiece.x(i);
 			int y = curY - curPiece.y(i);
 			board[(y * BOARD_WIDTH) + x] = curPiece.getShape();
 		}
-
 		removeFullLines();
-
 		if (!isFallingFinished) {
 			newPiece();
 		}
-
 	}
 
 	private void newPiece() {
@@ -174,7 +154,6 @@ public class Board extends JPanel {
 		curY = BOARD_HEIGHT - 1 + curPiece.minY();
 
 		if (!tryMove(curPiece, curX, curY)) {
-
 			curPiece.setShape(Tetrominoe.NO_SHAPE);
 			timer.stop();
 
@@ -186,68 +165,44 @@ public class Board extends JPanel {
 	private boolean tryMove(Shape newPiece, int newX, int newY) {
 
 		for (int i = 0; i < 4; i++) {
-
 			int x = newX + newPiece.x(i);
 			int y = newY - newPiece.y(i);
-
-			if (x < 0 || x >= BOARD_WIDTH || y < 0 || y >= BOARD_HEIGHT) {
-
-				return false;
-			}
-
-			if (shapeAt(x, y) != Tetrominoe.NO_SHAPE) {
-
+			if ((x < 0 || x >= BOARD_WIDTH || y < 0 || y >= BOARD_HEIGHT) || (shapeAt(x, y) != Tetrominoe.NO_SHAPE)) {
 				return false;
 			}
 		}
-
 		curPiece = newPiece;
 		curX = newX;
 		curY = newY;
-
 		repaint();
 
 		return true;
 	}
 
 	private void removeFullLines() {
-
 		int numFullLines = 0;
-
 		for (int i = BOARD_HEIGHT - 1; i >= 0; i--) {
-
 			boolean lineIsFull = true;
-
 			for (int j = 0; j < BOARD_WIDTH; j++) {
-
 				if (shapeAt(j, i) == Tetrominoe.NO_SHAPE) {
-
 					lineIsFull = false;
 					break;
 				}
 			}
-
 			if (lineIsFull) {
-
 				numFullLines++;
-
 				for (int k = i; k < BOARD_HEIGHT - 1; k++) {
 					for (int j = 0; j < BOARD_WIDTH; j++) {
-
 						board[(k * BOARD_WIDTH) + j] = shapeAt(j, k + 1);
 					}
 				}
 			}
 		}
-
 		if (numFullLines > 0) {
-
 			numLinesRemoved += numFullLines;
-
 			statusbar.setText(String.valueOf(numLinesRemoved));
 			isFallingFinished = true;
 			curPiece.setShape(Tetrominoe.NO_SHAPE);
-
 		}
 	}
 
@@ -274,20 +229,22 @@ public class Board extends JPanel {
 			update();
 			repaint();
 		}
+
+		private void update() {
+			if (isPaused) {
+				return;
+			}
+
+			if (isFallingFinished) {
+				isFallingFinished = false;
+				newPiece();
+			} else {
+				oneLineDown();
+			}
+		}
 	}
 
-	private void update() {
-		if (isPaused) {
-			return;
-		}
 
-		if (isFallingFinished) {
-			isFallingFinished = false;
-			newPiece();
-		} else {
-			oneLineDown();
-		}
-	}
 
 	class TAdapter extends KeyAdapter {
 
