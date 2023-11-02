@@ -4,10 +4,6 @@ import java.util.Random;
 
 public class Shape {
 
-	protected enum Tetrominoe {
-		NoShape, ZShape, SShape, LineShape, TShape, SquareShape, LShape, MirroredLShape;
-	}
-
 	private Tetrominoe pieceShape;
 	private int coords[][];
 	private int[][][] coordsTable;
@@ -23,7 +19,7 @@ public class Shape {
 				{ { 0, -1 }, { 0, 0 }, { 0, 1 }, { 0, 2 } }, { { -1, 0 }, { 0, 0 }, { 1, 0 }, { 0, 1 } },
 				{ { 0, 0 }, { 1, 0 }, { 0, 1 }, { 1, 1 } }, { { -1, -1 }, { 0, -1 }, { 0, 0 }, { 0, 1 } },
 				{ { 1, -1 }, { 0, -1 }, { 0, 0 }, { 0, 1 } } };
-		setShape(Tetrominoe.NoShape);
+		setShape(Tetrominoe.NO_SHAPE);
 
 	}
 
@@ -89,7 +85,7 @@ public class Shape {
 
 	public Shape rotateLeft() {
 
-		if (pieceShape == Tetrominoe.SquareShape) {
+		if (pieceShape == Tetrominoe.SQUARE_SHAPE) {
 			return this;
 		}
 
@@ -108,7 +104,7 @@ public class Shape {
 
 	public Shape rotateRight() {
 
-		if (pieceShape == Tetrominoe.SquareShape) {
+		if (pieceShape == Tetrominoe.SQUARE_SHAPE) {
 
 			return this;
 		}

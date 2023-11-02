@@ -11,7 +11,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-import org.fivenan.minigames.tetris.Shape.Tetrominoe;
 
 public class Board extends JPanel {
 	private final int BOARD_WIDTH = 10;
@@ -102,7 +101,7 @@ public class Board extends JPanel {
 		for (int i = 0; i < BOARD_HEIGHT; i++) {
 			for (int j = 0; j < BOARD_WIDTH; j++) {
 				Tetrominoe shape = shapeAt(j, BOARD_HEIGHT - i - 1);
-				if (shape != Tetrominoe.NoShape) {
+				if (shape != Tetrominoe.NO_SHAPE) {
 					drawSquare(g, j * squareWidth(), boardTop + i * squareHeight(), shape);
 				}
 			}
@@ -110,7 +109,7 @@ public class Board extends JPanel {
 	}
 
 	private void drawCurrentPiece(Graphics g, int boardTop) {
-		if (curPiece.getShape() != Tetrominoe.NoShape) {
+		if (curPiece.getShape() != Tetrominoe.NO_SHAPE) {
 			for (int i = 0; i < 4; i++) {
 				int x = curX + curPiece.x(i);
 				int y = curY - curPiece.y(i);
@@ -147,7 +146,7 @@ public class Board extends JPanel {
 	private void clearBoard() {
 		for (int i = 0; i < BOARD_HEIGHT * BOARD_WIDTH; i++) {
 
-			board[i] = Tetrominoe.NoShape;
+			board[i] = Tetrominoe.NO_SHAPE;
 		}
 	}
 
@@ -176,7 +175,7 @@ public class Board extends JPanel {
 
 		if (!tryMove(curPiece, curX, curY)) {
 
-			curPiece.setShape(Tetrominoe.NoShape);
+			curPiece.setShape(Tetrominoe.NO_SHAPE);
 			timer.stop();
 
 			var msg = String.format("Game over. Score: %d", numLinesRemoved);
@@ -196,7 +195,7 @@ public class Board extends JPanel {
 				return false;
 			}
 
-			if (shapeAt(x, y) != Tetrominoe.NoShape) {
+			if (shapeAt(x, y) != Tetrominoe.NO_SHAPE) {
 
 				return false;
 			}
@@ -221,7 +220,7 @@ public class Board extends JPanel {
 
 			for (int j = 0; j < BOARD_WIDTH; j++) {
 
-				if (shapeAt(j, i) == Tetrominoe.NoShape) {
+				if (shapeAt(j, i) == Tetrominoe.NO_SHAPE) {
 
 					lineIsFull = false;
 					break;
@@ -247,18 +246,14 @@ public class Board extends JPanel {
 
 			statusbar.setText(String.valueOf(numLinesRemoved));
 			isFallingFinished = true;
-			curPiece.setShape(Tetrominoe.NoShape);
+			curPiece.setShape(Tetrominoe.NO_SHAPE);
 
 		}
 	}
 
 	private void drawSquare(Graphics g, int x, int y, Tetrominoe shape) {
 
-		Color colors[] = { new Color(0, 0, 0), new Color(204, 102, 102), new Color(102, 204, 102),
-				new Color(102, 102, 204), new Color(204, 204, 102), new Color(204, 102, 204), new Color(102, 204, 204),
-				new Color(218, 170, 0) };
-
-		var color = colors[shape.ordinal()];
+		Color color = shape.getColor();
 
 		g.setColor(color);
 		g.fillRect(x + 1, y + 1, squareWidth() - 2, squareHeight() - 2);
@@ -276,31 +271,20 @@ public class Board extends JPanel {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-
-			doGameCycle();
+			update();
+			repaint();
 		}
-
-	}
-
-	private void doGameCycle() {
-
-		update();
-		repaint();
 	}
 
 	private void update() {
-
 		if (isPaused) {
-
 			return;
 		}
 
 		if (isFallingFinished) {
-
 			isFallingFinished = false;
 			newPiece();
 		} else {
-
 			oneLineDown();
 		}
 	}
@@ -309,16 +293,12 @@ public class Board extends JPanel {
 
 		@Override
 		public void keyPressed(KeyEvent e) {
-
-			if (curPiece.getShape() == Tetrominoe.NoShape) {
-
+			if (curPiece.getShape() == Tetrominoe.NO_SHAPE) {
 				return;
 			}
-
 			int keycode = e.getKeyCode();
 
 			switch (keycode) {
-
 			case KeyEvent.VK_P -> pause();
 			case KeyEvent.VK_LEFT -> tryMove(curPiece, curX - 1, curY);
 			case KeyEvent.VK_RIGHT -> tryMove(curPiece, curX + 1, curY);
