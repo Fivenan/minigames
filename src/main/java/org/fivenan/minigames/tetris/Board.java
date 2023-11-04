@@ -2,8 +2,6 @@ package org.fivenan.minigames.tetris;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -56,7 +54,7 @@ public class Board extends JPanel {
 		clearBoard();
 		newPiece();
 
-		timer = new Timer(PERIOD_INTERVAL, new GameCycle());
+		timer = new Timer(PERIOD_INTERVAL, new GameCycle(this));
 		timer.start();
 	}
 
@@ -142,7 +140,7 @@ public class Board extends JPanel {
 		}
 	}
 
-	private void newPiece() {
+	void newPiece() {
 
 		curPiece.setRandomShape();
 		curX = BOARD_WIDTH / 2 + 1;
@@ -217,26 +215,20 @@ public class Board extends JPanel {
 		g.drawLine(x + squareWidth() - 1, y + squareHeight() - 1, x + squareWidth() - 1, y + 1);
 	}
 
-	private class GameCycle implements ActionListener {
+	public boolean isPaused() {
+		return isPaused;
+	}
 
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			update();
-			repaint();
-		}
+	public void setPaused(boolean isPaused) {
+		this.isPaused = isPaused;
+	}
 
-		private void update() {
-			if (isPaused) {
-				return;
-			}
+	public boolean isFallingFinished() {
+		return isFallingFinished;
+	}
 
-			if (isFallingFinished) {
-				isFallingFinished = false;
-				newPiece();
-			} else {
-				oneLineDown();
-			}
-		}
+	public void setFallingFinished(boolean isFallingFinished) {
+		this.isFallingFinished = isFallingFinished;
 	}
 
 	public int getCurX() {
