@@ -4,8 +4,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -28,17 +26,14 @@ public class Board extends JPanel {
 	private Tetrominoe[] board;
 
 	public Board(Tetris parent) {
-
 		initBoard(parent);
 	}
 
 	private void initBoard(Tetris parent) {
-
 		setFocusable(true);
 		statusbar = parent.getStatusBar();
 
-		addKeyListener(new TAdapter());
-
+		addKeyListener(new TAdapter(this));
 	}
 
 	private int squareWidth() {
@@ -65,7 +60,7 @@ public class Board extends JPanel {
 		timer.start();
 	}
 
-	private void pause() {
+	void pause() {
 		isPaused = !isPaused;
 		if (isPaused) {
 			statusbar.setText("Game Paused");
@@ -112,7 +107,7 @@ public class Board extends JPanel {
 		}
 	}
 
-	private void dropDown() {
+	void dropDown() {
 		int newY = curY;
 		while (newY > 0) {
 			if (!tryMove(curPiece, curX, newY - 1)) {
@@ -123,7 +118,7 @@ public class Board extends JPanel {
 		pieceDropped();
 	}
 
-	private void oneLineDown() {
+	void oneLineDown() {
 		if (!tryMove(curPiece, curX, curY - 1)) {
 			pieceDropped();
 		}
@@ -162,12 +157,12 @@ public class Board extends JPanel {
 		}
 	}
 
-	private boolean tryMove(Shape newPiece, int newX, int newY) {
+	boolean tryMove(Shape newPiece, int newX, int newY) {
 
 		for (int i = 0; i < 4; i++) {
 			int x = newX + newPiece.x(i);
 			int y = newY - newPiece.y(i);
-			if ((x < 0 || x >= BOARD_WIDTH || y < 0 || y >= BOARD_HEIGHT) || (shapeAt(x, y) != Tetrominoe.NO_SHAPE)) {
+			if (x < 0 || x >= BOARD_WIDTH || y < 0 || y >= BOARD_HEIGHT || (shapeAt(x, y) != Tetrominoe.NO_SHAPE)) {
 				return false;
 			}
 		}
@@ -244,28 +239,28 @@ public class Board extends JPanel {
 		}
 	}
 
-
-
-	class TAdapter extends KeyAdapter {
-
-		@Override
-		public void keyPressed(KeyEvent e) {
-			if (curPiece.getShape() == Tetrominoe.NO_SHAPE) {
-				return;
-			}
-			int keycode = e.getKeyCode();
-
-			switch (keycode) {
-			case KeyEvent.VK_P -> pause();
-			case KeyEvent.VK_LEFT -> tryMove(curPiece, curX - 1, curY);
-			case KeyEvent.VK_RIGHT -> tryMove(curPiece, curX + 1, curY);
-			case KeyEvent.VK_UP -> tryMove(curPiece.rotateLeft(), curX, curY);
-			case KeyEvent.VK_DOWN -> tryMove(curPiece.rotateRight(), curX, curY);
-			case KeyEvent.VK_SPACE -> dropDown();
-			case KeyEvent.VK_D -> oneLineDown();
-
-			}
-
-		}
+	public int getCurX() {
+		return curX;
 	}
+
+	public void setCurX(int curX) {
+		this.curX = curX;
+	}
+
+	public int getCurY() {
+		return curY;
+	}
+
+	public void setCurY(int curY) {
+		this.curY = curY;
+	}
+
+	public Shape getCurPiece() {
+		return curPiece;
+	}
+
+	public void setCurPiece(Shape curPiece) {
+		this.curPiece = curPiece;
+	}
+
 }

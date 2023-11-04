@@ -10,6 +10,13 @@ public class Tetris extends JFrame {
 
 	private JLabel statusBar;
 
+	public static void main(String[] args) {
+		EventQueue.invokeLater(() -> {
+			Tetris game = new Tetris();
+			game.setVisible(true);
+		});
+	}
+
 	public Tetris() {
 		initUI();
 	}
@@ -18,7 +25,7 @@ public class Tetris extends JFrame {
 		statusBar = new JLabel(" 0");
 		add(statusBar, BorderLayout.SOUTH);
 		
-		var board = new Board(this);
+		Board board = new Board(this);
 		add(board);
 		board.start();
 		
@@ -30,13 +37,5 @@ public class Tetris extends JFrame {
 
 	public JLabel getStatusBar() {
 		return statusBar;
-	}
-
-	public static void main(String[] args) {
-
-		EventQueue.invokeLater(() -> {
-			var game = new Tetris();
-			game.setVisible(true);
-		});
 	}
 }
