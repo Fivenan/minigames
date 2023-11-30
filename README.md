@@ -12,6 +12,8 @@ tic tac toe
 
 sudoku
 
+graphic tests
+
 UI made with Swing and JavaFX
 
 used to test features of the Spring framework
