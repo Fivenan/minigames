@@ -12,6 +12,8 @@ tic tac toe
 
 sudoku
 
+Pong
+
 graphic tests
 
 UI made with Swing and JavaFX
