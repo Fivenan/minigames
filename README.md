@@ -6,6 +6,8 @@ tetris
 
 sliding puzzle
 
+ball maze
+
 spaceship war
 
 tic tac toe
