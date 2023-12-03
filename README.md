@@ -16,6 +16,8 @@ sudoku
 
 Pong
 
+Othello
+
 graphic tests
 
 UI made with Swing and JavaFX
