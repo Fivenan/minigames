@@ -16,6 +16,8 @@ sudoku
 
 Pong
 
+snake
+
 Othello
 
 graphic tests
