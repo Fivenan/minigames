@@ -18,7 +18,9 @@ Pong
 
 snake
 
-Othello
+othello
+
+camp and tent
 
 graphic tests
 
