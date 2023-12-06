@@ -14,13 +14,15 @@ tic tac toe
 
 sudoku
 
-Pong
+pong
 
 snake
 
 othello
 
 camp and tent
+
+## features
 
 graphic tests
 
