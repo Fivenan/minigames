@@ -28,4 +28,6 @@ graphic tests
 
 UI made with Swing and JavaFX
 
+AI development
+
 used to test features of the Spring framework
