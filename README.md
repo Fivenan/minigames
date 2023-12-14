@@ -22,6 +22,8 @@ othello
 
 camp and tent
 
+scottland yard
+
 ## features
 
 graphic tests
