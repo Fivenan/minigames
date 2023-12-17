@@ -2,27 +2,27 @@
 
 making minigames with the spring framework
 
-tetris
+- tetris
 
-sliding puzzle
+- sliding puzzle
 
-ball maze
+- ball maze
 
-spaceship war
+- spaceship war
 
-tic tac toe
+- tic tac toe
 
-sudoku
+- sudoku
 
-pong
+- pong
 
-snake
+- snake
 
-othello
+- othello
 
-camp and tent
+- camp and tent
 
-scottland yard
+- scottland yard
 
 ## features
 
