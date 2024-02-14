@@ -30,6 +30,6 @@ graphic tests
 
 UI made with Swing and JavaFX
 
-AI development
+simple AI agent
 
 used to test features of the Spring framework
